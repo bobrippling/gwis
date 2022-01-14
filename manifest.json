@@ -1,0 +1,29 @@
+{
+	"name": "Go Where I Say",
+	"description": "Skip slow certificate/url checks",
+	"version": "1.0.0",
+	"manifest_version": 2,
+	"background": { "scripts": ["background.js"] },
+	"icons": {
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://mcas-proxyweb.mcas.ms/*",
+				"*://mcas-proxyweb/*",
+				"*://safelinks.protection.outlook.com.mcas.ms/*",
+				"*://safelinks.protection.outlook.com/*"
+			],
+			"css": [],
+			"run_at": "document_start"
+		}
+	],
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"*://mcas-proxyweb.mcas.ms/*",
+		"*://mcas-proxyweb/*",
+		"*://safelinks.protection.outlook.com.mcas.ms/*",
+		"*://safelinks.protection.outlook.com/*"
+	]
+}
