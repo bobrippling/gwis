@@ -25,5 +25,10 @@
 		"*://mcas-proxyweb/*",
 		"*://safelinks.protection.outlook.com.mcas.ms/*",
 		"*://safelinks.protection.outlook.com/*"
-	]
+	],
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "gwis@rob"
+		}
+	}
 }
