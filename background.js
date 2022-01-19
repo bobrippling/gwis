@@ -24,11 +24,13 @@ const hosts = [
 	},
 ];
 
-chrome.webRequest.onBeforeRequest.addListener(
+browser.webRequest.onBeforeRequest.addListener(
 	details => {
-		const resolved = extractOriginalUrl(details.url);
+		const { url: from } = details;
+		const resolved = extractOriginalUrl(from);
 		if (!resolved) return;
 
+		countRedirect(from);
 		return { redirectUrl: resolved };
 	},
 	{
@@ -65,4 +67,18 @@ const extractOriginalUrl = s => {
 
 		return target;
 	}
+};
+
+const countRedirect = newUrl => {
+	browser.storage.local.get(
+		"redirects",
+		({ redirects = {} }) => {
+			browser.storage.local.set({
+				redirects: {
+					...redirects,
+					[newUrl]: (redirects[newUrl] || 0) + 1,
+				}
+			});
+		},
+	);
 };

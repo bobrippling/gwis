@@ -21,11 +21,16 @@
 	"permissions": [
 		"webRequest",
 		"webRequestBlocking",
+		"storage",
 		"*://mcas-proxyweb.mcas.ms/*",
 		"*://mcas-proxyweb/*",
 		"*://safelinks.protection.outlook.com.mcas.ms/*",
 		"*://safelinks.protection.outlook.com/*"
 	],
+	"browser_action": {
+		"default_title": "Redirect Stats",
+		"default_popup": "popup.html"
+	},
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "gwis@rob"
