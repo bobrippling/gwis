@@ -1,18 +1,17 @@
 const regen = () => {
 	browser.storage.local.get(
 		"redirects",
-		({ redirects = {} }) => {
+		({ redirects = [] }) => {
 			const elem = document.getElementById("redirectList");
 
-			const newChildren = Object
-				.entries(redirects)
-				.map(([href, count]) => {
+			const newChildren = redirects
+				.map(({ url: href, time }) => {
 					const url = new URL(href);
 
 					const li = document.createElement("li");
 					li.innerHTML = `
 						<span>
-							${count}
+							${date2str(new Date(time))}
 						</span>
 						<pre style='display: inline'>
 							${url.host}${url.pathname.substr(0, 20)}${url.pathname.length > 20 ? "..." : ""}
@@ -29,6 +28,12 @@ const regen = () => {
 		},
 	);
 };
+
+const date2str = d =>
+	`${d.getYear() + 1900}/${pad((d.getMonth() + 1))}/${pad(d.getDate())} ` +
+	`${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+const pad = n => n < 10 ? `0${n}` : `${n}`;
 
 const reset = async () => {
 	await browser.storage.local.clear();

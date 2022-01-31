@@ -69,15 +69,19 @@ const extractOriginalUrl = s => {
 	}
 };
 
-const countRedirect = newUrl => {
+const countRedirect = url => {
 	browser.storage.local.get(
 		"redirects",
-		({ redirects = {} }) => {
+		({ redirects = [] }) => {
+
 			browser.storage.local.set({
-				redirects: {
+				redirects: [
 					...redirects,
-					[newUrl]: (redirects[newUrl] || 0) + 1,
-				}
+					{
+						url,
+						time: Date.now(),
+					},
+				]
 			});
 		},
 	);
