@@ -12,15 +12,17 @@
 //   McasTsid=<...>
 
 const hosts = [
-	{ host: "mcas-proxyweb.mcas.ms" },
-	{ host: "mcas-proxyweb" },
+	{ host: "mcas-proxyweb.mcas.ms", extract: mcas, },
+	{ host: "mcas-proxyweb", extract: mcas, },
 	{
 		host: "safelinks.protection.outlook.com.mcas.ms",
 		subdomains: true,
+		extract: mcas,
 	},
 	{
 		host: "safelinks.protection.outlook.com",
 		subdomains: true,
+		extract: mcas,
 	},
 ];
 
@@ -55,18 +57,7 @@ const extractOriginalUrl = s => {
 	const found = hosts.find(({ host }) => originalUrl.hostname.endsWith(host));
 	if(!found) return;
 
-	if(originalUrl.pathname === "/certificate-checker") {
-		const target = originalUrl.searchParams.get("originalUrl");
-		if(!target) return;
-
-		return extractOriginalUrl(target);
-	}
-
-	if (originalUrl.pathname === "/") {
-		const target = originalUrl.searchParams.get("url");
-
-		return target;
-	}
+	return found.extract(originalUrl)
 };
 
 const countRedirect = url => {
@@ -86,3 +77,18 @@ const countRedirect = url => {
 		},
 	);
 };
+
+function mcas(originalUrl) {
+	if(originalUrl.pathname === "/certificate-checker") {
+		const target = originalUrl.searchParams.get("originalUrl");
+		if(!target) return;
+
+		return extractOriginalUrl(target);
+	}
+
+	if (originalUrl.pathname === "/") {
+		const target = originalUrl.searchParams.get("url");
+
+		return target;
+	}
+}
