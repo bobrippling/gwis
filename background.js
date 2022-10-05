@@ -24,6 +24,11 @@ const hosts = [
 		subdomains: true,
 		extract: mcas,
 	},
+	{
+		host: "awstrack.me",
+		subdomains: true,
+		extract: aws,
+	},
 ];
 
 browser.webRequest.onBeforeRequest.addListener(
@@ -91,4 +96,13 @@ function mcas(originalUrl) {
 
 		return target;
 	}
+}
+
+function aws(originalUrl) {
+	// https://<subdomain>.<another>.<region>.awstrack.me/L0/<real-url>/<tracking-a>/<tracking-b>/<tracking-c>
+	//                                                       ^~~~~~~~~~
+
+	const target = u.pathname.split('/')[2];
+
+	return decodeURIComponent(target);
 }

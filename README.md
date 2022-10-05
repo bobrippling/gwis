@@ -7,3 +7,4 @@ Keep waiting for MCAS certificate checker or caught out by failures to check URL
 - `mcas-proxyweb`
 - `safelinks.protection.outlook.com`
 - The above, but with `.mcas.ms` suffixed
+- `awstrack.me`
